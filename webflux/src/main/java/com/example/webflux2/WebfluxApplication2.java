@@ -1,5 +1,7 @@
 package com.example.webflux2;
 
+import java.time.Duration;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,7 @@ public class WebfluxApplication2 {
 
         public Mono<String> getTest(Long num) throws InterruptedException {
             return Mono.fromSupplier(() -> "Test " + num)
+                    .delayElement(Duration.ofSeconds(1))
                     .log();
 
         }
