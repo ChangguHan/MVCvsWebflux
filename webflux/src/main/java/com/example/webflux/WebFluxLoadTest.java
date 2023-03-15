@@ -14,10 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WebFluxLoadTest {
     public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
-//        String url = "http://localhost:" + WebfluxApplication.PORT + "/test?num={num}";
-        String url = "http://localhost:" + WebfluxApplication.PORT + "/persons/json";
+        String url = "http://localhost:" + WebfluxApplication.PORT + "/test?num={num}";
 
-        int requestNum = 1; // 웹플럭스 디폴트 스레드 개수, 코어 * 2
+        int requestNum = 10; // 웹플럭스 디폴트 스레드 개수, 코어 * 2
         ExecutorService es = Executors.newFixedThreadPool(requestNum);
         RestTemplate rt = new RestTemplate();
         StopWatch mainsw = new StopWatch();

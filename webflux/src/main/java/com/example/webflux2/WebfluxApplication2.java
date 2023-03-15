@@ -1,7 +1,5 @@
 package com.example.webflux2;
 
-import java.time.Duration;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,6 @@ public class WebfluxApplication2 {
 
     public static void main(String[] args) {
         System.setProperty("server.port", PORT);
-//        System.setProperty("reactor.netty.ioWorkerCount", "2");
         System.setProperty("logging.level.org.springframework.web", "debug");
 
         SpringApplication.run(WebfluxApplication2.class, args);
@@ -36,7 +33,6 @@ public class WebfluxApplication2 {
 
         @GetMapping("/test")
         public Mono<String> getTest(Long num) throws InterruptedException {
-//            log.info("Controller {}", num);
             return testService.getTest(num)
                     .log();
         }
@@ -48,10 +44,8 @@ public class WebfluxApplication2 {
     public static class TestService {
 
         public Mono<String> getTest(Long num) throws InterruptedException {
-//            log.info("Service {}", num);
-//            Thread.sleep(1000);
             return Mono.fromSupplier(() -> "Test " + num)
-                    .delayElement(Duration.ofSeconds(1));
+                    .log();
 
         }
     }

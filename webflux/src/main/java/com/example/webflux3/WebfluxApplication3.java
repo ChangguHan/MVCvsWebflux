@@ -1,7 +1,5 @@
-package com.example.webflux;
+package com.example.webflux3;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Service;
@@ -15,16 +13,16 @@ import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 @EnableWebFlux
-public class WebfluxApplication {
+public class WebfluxApplication3 {
 
-    public static final String PORT = "9002";
+    public static final String PORT = "9004";
 
 
     public static void main(String[] args) {
         System.setProperty("server.port", PORT);
         System.setProperty("logging.level.org.springframework.web", "debug");
 
-        SpringApplication.run(WebfluxApplication.class, args);
+        SpringApplication.run(WebfluxApplication3.class, args);
     }
 
     @RequiredArgsConstructor
@@ -32,13 +30,11 @@ public class WebfluxApplication {
     @Slf4j
     public static class TestController {
         private final TestService testService;
-        private static final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
-
 
         @GetMapping("/test")
         public Mono<String> getTest(Long num) throws InterruptedException {
-            log.info("Controller {}", num);
-            return testService.getTest(num);
+            return testService.getTest(num)
+                    .log();
         }
     }
 
@@ -48,9 +44,8 @@ public class WebfluxApplication {
     public static class TestService {
 
         public Mono<String> getTest(Long num) throws InterruptedException {
-            log.info("Service {}", num);
-            Thread.sleep(1000);
-            return Mono.fromSupplier(() -> "Test " + num);
+            return Mono.fromSupplier(() -> "Test " + num)
+                    .log();
         }
     }
 
